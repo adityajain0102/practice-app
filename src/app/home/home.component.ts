@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   url: any;
   format: any;
   subs: Subscription[] = [];
-  posts: any[] = []
+  posts: any[] = [];
   user: any= [{
     "id": 1,
     "email": "rupal@mail.com",
@@ -71,6 +71,7 @@ export class HomeComponent implements OnInit {
         },
         error: (error) => {
           console.log("error", error);
+          // delete after api integration
           let userprofile:any = localStorage.getItem('userdata');
            this.user = JSON.parse(userprofile);
            console.log("userprofile from LC", this.user);
@@ -131,15 +132,15 @@ export class HomeComponent implements OnInit {
           if (index != -1) {
             this.posts[index].comments.unshift(
               {
-                user_id: response.data.author.id,
-                user_name: `${response.data.author.firstName} ${response.data.author.lastName}`,
-                comment: response.data.content,
+                user_id: response.author.id,
+                user_name: `${response.author.firstName} ${response.author.lastName}`,
+                comment: response.content,
                 postid: post.id,
-                title: `${response.data.author.firstName} ${response.data.author.lastName}`,
+                title: `${response.author.firstName} ${response.author.lastName}`,
                 time: {
                   seconds: 10
                 },
-                dateCreated:response.data.dateCreated
+                dateCreated:response.dateCreated
               }
             )
             post.comment = ''
@@ -168,18 +169,37 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // need to integrate api for likes and dislike
+  // post http://localhost:8080/postHome/posts/{postId}/like
+  //post http://localhost:8080/postHome/posts/{postId}/unlike
   likeOrDelike(post: any) {
     let index = this.posts.findIndex(x => x.id === post.id)
     console.log(this.posts[index]);
     if(!this.posts[index].likes.includes(this.user.id)){
       this.posts[index]['likes'].push(this.user.id)
       this.posts[index]['is_liked'] = true
+      this.postService.likePost(this.posts[index]).subscribe({
+        next: (response)=> {
+          this.posts[index]['counter'] = this.posts[index]['counter'] +1
+        },
+        error: (error) => {
+          console.log("error", error); 
+        }
+      })
     }else{
       console.log("else", this.posts[index].likes.includes(this.user.id));
       let like_index = this.posts[index]['likes'].findIndex((x:any) => x === this.user.id)
         if(like_index!=-1){
           this.posts[index]['likes'].splice(like_index,1)
           this.posts[index]['is_liked'] = false
+          this.postService.UnlikePost(this.posts[index]).subscribe({
+            next: (response)=> {
+              this.posts[index]['counter'] = this.posts[index]['counter'] -1
+            },
+            error: (error) => {
+              console.log("error", error); 
+            }
+          })
         }
     }
     this.posts = this.posts;
@@ -307,6 +327,63 @@ export class HomeComponent implements OnInit {
           error: (error)=> {
             console.log("error search api", error);
              // testing code here before api integration. ()
+             this.searchUsers=[
+              {
+                  "user": {
+                      "id": 1,
+                      "email": "user.one@gmail.com",
+                      "firstName": "user",
+                      "lastName": "one",
+                      "intro": null,
+                      "gender": "male",
+                      "hometown": null,
+                      "currentCity": null,
+                      "profilePhoto": null,
+                      "role": "user",
+                      "followerCount": 0,
+                      "followingCount": 1,
+                      "enabled": true,
+                      "accountVerified": false,
+                      "emailVerified": false,
+                      "birthDate": null,
+                      "joinDate": "2022-11-12 08:00:38",
+                      "credentialsNonExpired": true,
+                      "accountNonExpired": true,
+                      "username": "rupal.dabade@gmail.com",
+                      "authorities": null,
+                      "accountNonLocked": true
+                  },
+                  "followedByAuthUser": false
+              },
+              {
+                  "user": {
+                      "id": 1,
+                      "email": "rupal.dabade@gmail.com",
+                      "firstName": "rupal",
+                      "lastName": "dabade",
+                      "intro": null,
+                      "gender": "female",
+                      "hometown": null,
+                      "currentCity": null,
+                      "profilePhoto": null,
+                      "role": "user",
+                      "followerCount": 0,
+                      "followingCount": 1,
+                      "enabled": true,
+                      "accountVerified": false,
+                      "emailVerified": false,
+                      "birthDate": null,
+                      "joinDate": "2022-11-12 08:00:38",
+                      "credentialsNonExpired": true,
+                      "accountNonExpired": true,
+                      "username": "rupal.dabade@gmail.com",
+                      "authorities": null,
+                      "accountNonLocked": true
+                  },
+                  "followedByAuthUser": true
+              }
+          ]
+          
             this.filteredList = this.searchUsers.filter((user:any) => user.user.firstName.toLowerCase().startsWith(this.searchUser.toLowerCase()) || user.user.lastName.toLowerCase().startsWith(this.searchUser.toLowerCase()));
             console.log("fil..", this.filteredList);
           }
@@ -384,5 +461,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  friendsList(){
+    console.log("friends list", this.user?.id);
+    if(this.user.id) {
+      this.router.navigate(['/friendslist'],{ queryParams: {id: this.user.id }})
+    } else {
+      console.log("user id is not there");
+    }
+  }
 }
 
