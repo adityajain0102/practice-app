@@ -10,7 +10,10 @@
 .icon-class {
   overflow: unset !important;
 }
-
+.hyperlink:hover {
+  color: rgb(151, 151, 238); 
+  text-decoration: underline;
+}
 .search-class {
   cursor: pointer;
   list-style-type: none;

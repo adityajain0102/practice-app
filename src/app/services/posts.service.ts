@@ -52,11 +52,38 @@ export class PostsService {
     )
   }
 
+  likePost(id:any): Observable<any> {
+    return this.http.post(environment.likePostUrl , id + '/like', this.httpOptions ).pipe(map((likeresponse: any) => {
+      return likeresponse;
+    })
+    )
+  }
+
+  UnlikePost(id:any): Observable<any> {
+    return this.http.post(environment.unlikePostUrl , id + '/unlike', this.httpOptions ).pipe(map((unlikeresponse: any) => {
+      return unlikeresponse;
+    })
+    )
+  }
+
   getSearchUsers(string:any): Observable<any> {
     return this.http.get(environment.apiUrl + '/search?key=' + string + '&page=1&size=5', this.httpOptions).pipe(map((result: any) => {
       console.log('result', result);
       return result;
     }
   ));
+  }
+
+  // http://localhost:8080/users/followingUsers/{logged In user}?page=1&size=5
+  getFollowers(id:any): Observable<any> {
+    return this.http.get(environment.followerUrl + id + '?page=1&size=5').pipe(map((followers:any)=> {
+      return followers;
+    }))
+  }
+// http://localhost:8080/users/followerUsers/1/follower?page=1&size=5
+  getFollowingUsers(id:any): Observable<any> {
+    return this.http.get(environment.followingUrl + id + 'follower?page=1&size=5').pipe(map((followingUsers:any)=> {
+      return followingUsers;
+    }))
   }
 }

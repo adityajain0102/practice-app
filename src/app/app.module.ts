@@ -28,6 +28,11 @@ import { ProfileDialogComponent } from './profile-dialog/profile-dialog.componen
 import {MatRadioModule} from '@angular/material/radio';
 import { authInterceptorProviders } from './helpers/auth.interceptor';
 import { FriendlistViewComponent } from './friendlist-view/friendlist-view.component';
+import { FriendsComponent } from './friends/friends.component';
+import { MatTabsModule} from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+
 const modules = [
   MatBadgeModule,
   MatMenuModule,
@@ -41,8 +46,10 @@ const modules = [
   ReactiveFormsModule,
   FormsModule,
   MatRadioModule,
-  
-]
+  MatTabsModule,
+  MatTableModule,
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +61,8 @@ const modules = [
     ForgotpasswordComponent,
     ChangepasswordComponent,
     ProfileDialogComponent,
-    FriendlistViewComponent
+    FriendlistViewComponent,
+    FriendsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,129 @@
+<div class="home-container">
+    <div class="home__header">
+      <div class="home__header__left">
+        <img mat-card-avatar src="assets/fb-head.jpg" (click)="backToHomePage()"/>
+        <div class="input">
+          <mat-icon class="search-icon">search_outline</mat-icon>
+          <form>
+            <div>
+            <input
+              type="text"
+              name="searchUser"
+              [(ngModel)]="searchUser"
+              (ngModelChange)="getFilteredList()"
+             
+              (keyup)="onKeyPress($event)"
+              [ngClass]="{ error: showError }"
+              />
+              <ul class="search-class" *ngIf="!listHidden">
+                 <li  *ngFor="let item of filteredList; let i = index"
+                [ngClass]="{ selected: i === selectedIndex }" (click)="viewUserProfile(i)"
+                > <img alt="" *ngIf="item.user?.profilePhoto === null && item.user?.gender =='male'" style="height:20px" mat-card-avatar src="../../assets/avatar.png">
+                <img alt="" *ngIf="(item.user?.profilePhoto === null &&  item.user?.gender =='female' ) || item.user?.gender == null" style="height:20px" mat-card-avatar src="../../assets/female-avatar.png"> 
+                <img alt="" *ngIf="item.user?.profilePhoto !== null" style="height:20px" mat-card-avatar src="{{item?.user?.profilePhoto}}"> 
+  
+                {{ item.user.firstName }} {{item.user.lastName}}</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+      <div class="home__header__middle">
+        <div class="active">
+          <mat-icon>home </mat-icon> &nbsp; &nbsp;
+        </div>
+      </div>
+      <div class="home__header__right">
+        <!-- profile should come here -->
+        <div>
+          <img alt=""  *ngIf="(user?.profilePhoto === null && user?.gender =='female')" mat-card-avatar style="height:25px;" src="../../assets/female-avatar.png">
+          <img alt="" *ngIf="(user?.profilePhoto === null && user?.gender =='male')" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.profilePhoto !== null" mat-card-avatar src="{{user?.profilePhoto}}">
+          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+        <div>
+          <mat-icon>add</mat-icon>
+        </div>
+        <!-- logout button -->
+        <div>
+          <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="userProfile()" style="cursor: pointer;">
+              <mat-icon>account_circle</mat-icon> Edit Profile
+            </button>
+            <button mat-menu-item (click)="changePassword()" style="cursor: pointer;">
+              <mat-icon>vpn_key</mat-icon> Change Password
+            </button>
+            <button mat-menu-item (click)="logout()" style="cursor: pointer;">
+              <mat-icon>exit_to_app</mat-icon> Logout
+            </button>
+          </mat-menu>
+        </div>
+  
+      </div>
+    </div>
+
+    <div class="home__body">
+        <div class="inside">
+        </div>
+      
+      <mat-card style="width:auto;height:auto;">
+          <!-- add matgroup with mat tabs -->
+          <mat-tab-group style="margin-top:5px;">
+            <mat-tab label="Followers"> 
+                <mat-list style="margin-top:20px;">
+                    <mat-list-item *ngFor="let follower of listofFollowers" style="margin-bottom:10px;">
+                      <img matListItemAvatar *ngIf="(follower?.profilePhoto === null && follower?.gender =='male')"
+                       mat-card-avatar  style="height:50px;width:50px;"  
+                       src="../../assets/avatar.png"
+                       (click)="viewUserProfile(follower)">
+                      <img matListItemAvatar *ngIf="(follower?.profilePhoto === null && follower?.gender =='female')" 
+                      mat-card-avatar style="height:50px;width:50px;" 
+                      src="../../assets/female-avatar.png"
+                      (click)="viewUserProfile(follower)">
+                      <img  matListItemAvatar alt="" *ngIf="follower?.profilePhoto !== null" 
+                      mat-card-avatar  style="height:50px;width:50px;"  
+                      src="{{follower?.profilePhoto}}"
+                      (click)="viewUserProfile(follower)">
+                        &nbsp; &nbsp; &nbsp; &nbsp;
+                      <h4 class="hyperlink" (click)="viewUserProfile(follower)" style="cursor:pointer">{{follower?.firstName}} {{follower?.lastName}}</h4>
+                      &nbsp; &nbsp; &nbsp; &nbsp;
+                      <mat-action-list>
+                        <button mat-raised-button  color="info" *ngIf="!follower?.followedByAuthUser" (click)="AddFriend(follower.id)">Add Friend</button>
+                       &nbsp;  <button mat-raised-button  color="warn" (click)="unFollowUser(follower.id, 'remove')">Remove</button>
+                      </mat-action-list>
+                    </mat-list-item>
+                     <br> 
+                  </mat-list>
+            </mat-tab>
+            <mat-tab label="Following">
+              <mat-list style="margin-top:20px;">
+                <mat-list-item *ngFor="let myfriend of myfriends" style="margin-bottom:10px;">
+                  <img matListItemAvatar *ngIf="(myfriend?.profilePhoto === null && myfriend?.gender =='male')" 
+                  mat-card-avatar  style="height:50px;width:50px;"  
+                  src="../../assets/avatar.png"
+                  (click)="viewUserProfile(myfriend)">
+                  <img matListItemAvatar *ngIf="(myfriend?.profilePhoto === null && myfriend?.gender =='female')"
+                   mat-card-avatar style="height:50px;width:50px;" 
+                   src="../../assets/female-avatar.png"
+                   (click)="viewUserProfile(myfriend)">
+                  <img  matListItemAvatar alt="" *ngIf="myfriend?.profilePhoto !== null" mat-card-avatar  
+                  style="height:50px;width:50px;" 
+                   src="{{myfriend?.profilePhoto}}"
+                   (click)="viewUserProfile(myfriend)">
+                    &nbsp; &nbsp; &nbsp; &nbsp;
+                  <h4 (click)="viewUserProfile(myfriend)" class="hyperlink" style="cursor:pointer">{{myfriend.firstName}} {{myfriend.lastName}}</h4>
+                  &nbsp; &nbsp; &nbsp; &nbsp;
+                  <mat-action-list>
+                   &nbsp;  
+                   <button mat-raised-button  color="warn" (click)="unFollowUser(myfriend?.id, 'unfriend')">UnFriend</button>
+                  </mat-action-list>
+                </mat-list-item>
+                 <br> 
+              </mat-list>
+            </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+      </div>
+</div>  

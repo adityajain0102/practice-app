@@ -18,7 +18,10 @@
               <ul class="search-class" *ngIf="!listHidden">
                 <li  *ngFor="let item of filteredList; let i = index"
                 [ngClass]="{ selected: i === selectedIndex }" (click)="viewUserProfile(i)"
-                > {{ item.user.firstName }} {{item.user.lastName}}</li>
+                > <img alt="" *ngIf="item.user.profilePhoto === null && item.user?.gender =='male'" style="height:20px" mat-card-avatar src="../../assets/avatar.png">
+                <img alt="" *ngIf="(item.user.profilePhoto === null &&  item.user?.gender =='female' ) || item.user?.gender == null" style="height:20px" mat-card-avatar src="../../assets/female-avatar.png"> 
+                
+                {{ item.user.firstName }} {{item.user.lastName}}</li>
               </ul>
             </div>
           </form>
@@ -33,8 +36,9 @@
       <div class="home__header__right" style="cursor: pointer;">
         <!-- profile should come here -->
         <div>
-          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
-          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
+          <img alt=""  *ngIf="(user?.profilePhoto === null && user?.gender =='female')" mat-card-avatar style="height:25px;" src="../../assets/female-avatar.png">
+          <img alt="" *ngIf="(user?.profilePhoto === null && user?.gender =='male')" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.profilePhoto !== null" mat-card-avatar src="{{user?.profilePhoto}}">
           <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
         </div>
         <div>
@@ -62,9 +66,10 @@
     <div class="home__body">
       <div class="inside">
         <div class="user-avatar" (click)="userProfile()" style="cursor: pointer;">
-          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
-          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
-          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+          <img alt=""  *ngIf="(user?.profilePhoto === null && user?.gender =='female')" mat-card-avatar style="height:25px;" src="../../assets/female-avatar.png">
+          <img alt="" *ngIf="(user?.profilePhoto === null && user?.gender =='male')" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.profilePhoto !== null" mat-card-avatar src="{{user?.profilePhoto}}">
+           <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
         </div>
         <div style="cursor: pointer;">
           <mat-icon>people</mat-icon>
@@ -110,11 +115,12 @@
     </mat-card>
       <div class="posts-section" style="width:850px;">
         <mat-card *ngFor="let p of posts; let i = index" class="posts">
-          <mat-card-header class="posts__header" (click)="viewUserProfile(p)">
-            <img alt="{{ p.user_name }}" mat-card-avatar [src]="p.avatar">
+          <mat-card-header style = "cursor:pointer" class="posts__header">
+            <img alt="{{ p.user_name }}" mat-card-avatar [src]="p.avatar" (click)="viewUserProfile(p)">
             <div class="posts__header__right">
-              <h3>{{ p.user_name }}</h3>
-              <span>{{ p.time.seconds * 1000 | date:'shortTime' }}</span>
+              <h3 (click)="viewUserProfile(p)" class="hyperlink">{{ p.user_name }}
+               </h3>
+              <span>{{ p.time.seconds * 1000 | date:'dd:mm:yyy' }}</span>
             </div>
           </mat-card-header>
           <mat-card-content class="posts__body" style="display: flex;

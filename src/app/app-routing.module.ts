@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 import { FriendlistViewComponent } from './friendlist-view/friendlist-view.component';
+import { FriendsComponent } from './friends/friends.component';
 const routes: Routes = [
     { path: 'home', component: HomeComponent},
     { path: 'register', component: RegisterComponent },
@@ -16,7 +17,9 @@ const routes: Routes = [
     { path: 'forgotpassword', component: ForgotpasswordComponent},
     { path: 'changepassword', component: ChangepasswordComponent},
     { path: 'profileview', component: FriendlistViewComponent},
+    { path: 'friendslist' , component: FriendsComponent},
     { path: '', component: LoginComponent },
+
     // otherwise redirect to home
     { path: '**', redirectTo: '', pathMatch: 'full' }
   ];
