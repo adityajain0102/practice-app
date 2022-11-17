@@ -1,0 +1,453 @@
+http://localhost:8080/users/signup
+{
+    "email":"rupal@mail.com",
+    "password":"pass123",
+    "firstName":"rupal",
+    "lastName":"dabade"
+}
+response:-
+{
+    "id": 1,
+    "email": "rupal@mail.com",
+    "firstName": "rupal",
+    "lastName": "dabade",
+    "intro": null,
+    "gender": null,
+    "hometown": null,
+    "currentCity": null,
+    "profilePhoto": null,
+    "role": "user",
+    "followerCount": 0,
+    "followingCount": 0,
+    "enabled": true,
+    "accountVerified": false,
+    "emailVerified": false,
+    "birthDate": null,
+    "joinDate": "2022-11-10 08:11:31",
+    "username": "rupal@mail.com",
+    "accountNonLocked": true,
+    "authorities": null,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true
+}
+
+http://localhost:8080/users/login
+{
+    "email":"rupal@mail.com",
+    "password":"pass123"
+}
+
+response:-
+{
+    "email": "rupal@mail.com",
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxLHJ1cGFsQG1haWwuY29tIiwiaXNzIjoiQ29kZUphdmEiLCJpYXQiOjE2NjgwNjgwNzEsImV4cCI6MTY2ODE1NDQ3MX0.XfWXruMOFXQVWP2BYkPb6xtKhl6wxiyoIfOeO69p4IZ2giTx8IdwyEtW_hEozgYJXyhDXWq7v0ARBCWVWFP_rQ"
+} 
+
+
+http://localhost:8080/users/viewUser
+{
+    "email":"rupal@mail.com"
+}
+Response :-
+{
+    "id": 1,
+    "email": "rupal@mail.com",
+    "firstName": "rupal",
+    "lastName": "dabade",
+    "intro": null,
+    "gender": null,
+    "hometown": null,
+    "currentCity": null,
+    "profilePhoto": null,
+    "role": "user",
+    "followerCount": 0,
+    "followingCount": 0,
+    "enabled": true,
+    "accountVerified": false,
+    "emailVerified": false,
+    "birthDate": null,
+    "joinDate": "2022-11-10 08:11:31",
+    "username": "rupal@mail.com",
+    "accountNonLocked": true,
+    "authorities": null,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true
+}
+
+
+http://localhost:8080/users/forgot-password?email="rupal@mail.com"
+response :
+200 status
+
+http://localhost:8080/users/updateInfo/{token}
+{
+    "birthDate" :"rupal.dabade@gmail.com",
+    "firstName":"hello",
+	"lastName":"hi",
+    "intro":"",
+    "gender":"",
+    "hometown":"",
+    "currentCity":"Indore"
+}
+reponse 
+{
+    "id": 1,
+    "email": "rupal@mail.com",
+    "firstName": "rupal",
+    "lastName": "dabade",
+    "intro": null,
+    "gender": null,
+    "hometown": null,
+    "currentCity": null,
+    "profilePhoto": null,
+    "role": "user",
+    "followerCount": 0,
+    "followingCount": 0,
+    "enabled": true,
+    "accountVerified": false,
+    "emailVerified": false,
+    "birthDate": null,
+    "joinDate": "2022-11-10 08:11:31",
+    "username": "rupal@mail.com",
+    "accountNonLocked": true,
+    "authorities": null,
+    "credentialsNonExpired": true,
+    "accountNonExpired": true
+}
+
+
+//12-nov-2022
+http://localhost:8080/postHome/posts/create?content=Good morning&postPhoto=
+(multipart api :- content, postPhoto) type- post
+response:-
+{
+    "id": 1,
+    "content": "Good morning",
+    "postPhoto": null,
+    "likeCount": 0,
+    "commentCount": 0,
+    "dateCreated": "2022-11-12 08:00:57",
+    "dateLastModified": "2022-11-12 08:00:57",
+    "author": {
+        "id": 1,
+        "email": "rupal.dabade@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:00:38",
+        "username": "rupal.dabade@gmail.com",
+        "credentialsNonExpired": true,
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    }
+}
+
+http://localhost:8080/postHome/posts/1/update?content=Good afternoon&postPhoto
+type :-post 
+http://localhost:8080/postHome/posts/{postId}/update?
+{
+    "id": 1,
+    "content": "Good afternoon",
+    "postPhoto": null,
+    "likeCount": 0,
+    "commentCount": 0,
+    "dateCreated": "2022-11-12 08:00:57",
+    "dateLastModified": "2022-11-12 08:05:13",
+    "author": {
+        "id": 1,
+        "email": "rupal.dabade@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:00:38",
+        "username": "rupal.dabade@gmail.com",
+        "credentialsNonExpired": true,
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    }
+}
+
+like a post :-
+http://localhost:8080/postHome/posts/1/like
+type post http://localhost:8080/postHome/posts/{post_id}/like
+response :- 200 success status
+
+unlike post :-
+http://localhost:8080/postHome/posts/1/unlike
+type:- post http://localhost:8080/postHome/posts/{postId}/unlike
+response :- 200 success status
+
+Comment on post:-
+http://localhost:8080/postHome/posts/1/comments/create?content=Gm
+http://localhost:8080/postHome/posts/{postId}/comments/create?content=G{string}
+type :-post
+response :-
+{
+    "id": 1,
+    "content": "Gm",
+    "dateCreated": "2022-11-12 08:20:22",
+    "dateLastModified": "2022-11-12 08:20:22",
+    "author": {
+        "id": 1,
+        "email": "rupal.dabade@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:00:38",
+        "username": "rupal.dabade@gmail.com",
+        "accountNonExpired": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    }
+}
+
+update comment on post
+http://localhost:8080/postHome/posts/1/comments/1/update?content=Gn
+http://localhost:8080/postHome/posts/{postid}/comments/{contentId}/update?content={String}
+type post
+{
+    "id": 1,
+    "content": "Gn",
+    "dateCreated": "2022-11-12 08:20:22",
+    "dateLastModified": "2022-11-12 08:23:21",
+    "author": {
+        "id": 1,
+        "email": "rupal.dabade@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:00:38",
+        "username": "rupal.dabade@gmail.com",
+        "accountNonExpired": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    }
+}
+
+get post by id
+http://localhost:8080/postHome/posts/1
+http://localhost:8080/postHome/posts/{postid}
+type get
+response:-
+{
+    "post": {
+        "id": 1,
+        "content": "Good afternoon",
+        "postPhoto": null,
+        "likeCount": 1,
+        "commentCount": 1,
+        "dateCreated": "2022-11-12 08:00:57",
+        "dateLastModified": "2022-11-12 08:05:13",
+        "author": {
+            "id": 1,
+            "email": "rupal.dabade@gmail.com",
+            "firstName": "rupal",
+            "lastName": "dabade",
+            "intro": null,
+            "gender": null,
+            "hometown": null,
+            "currentCity": null,
+            "profilePhoto": null,
+            "role": "user",
+            "followerCount": 0,
+            "followingCount": 0,
+            "enabled": true,
+            "accountVerified": false,
+            "emailVerified": false,
+            "birthDate": null,
+            "joinDate": "2022-11-12 08:00:38",
+            "username": "rupal.dabade@gmail.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "authorities": null
+        }
+    },
+    "likedByAuthUser": true
+}
+
+
+get comments by pagination
+http://localhost:8080/postHome/posts/1/comments?page=1&size=5
+http://localhost:8080/postHome/posts/{postid}/comments?page={pageno}&size={size}
+type:- get
+reponse :-
+[
+    {
+        "id": 2,
+        "content": "hello",
+        "dateCreated": "2022-11-12 08:30:59",
+        "dateLastModified": "2022-11-12 08:30:59",
+        "author": {
+            "id": 1,
+            "email": "rupal.dabade@gmail.com",
+            "firstName": "rupal",
+            "lastName": "dabade",
+            "intro": null,
+            "gender": null,
+            "hometown": null,
+            "currentCity": null,
+            "profilePhoto": null,
+            "role": "user",
+            "followerCount": 0,
+            "followingCount": 0,
+            "enabled": true,
+            "accountVerified": false,
+            "emailVerified": false,
+            "birthDate": null,
+            "joinDate": "2022-11-12 08:00:38",
+            "username": "rupal.dabade@gmail.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "authorities": null
+        }
+    },
+    {
+        "id": 1,
+        "content": "Gn",
+        "dateCreated": "2022-11-12 08:20:22",
+        "dateLastModified": "2022-11-12 08:23:21",
+        "author": {
+            "id": 1,
+            "email": "rupal.dabade@gmail.com",
+            "firstName": "rupal",
+            "lastName": "dabade",
+            "intro": null,
+            "gender": null,
+            "hometown": null,
+            "currentCity": null,
+            "profilePhoto": null,
+            "role": "user",
+            "followerCount": 0,
+            "followingCount": 0,
+            "enabled": true,
+            "accountVerified": false,
+            "emailVerified": false,
+            "birthDate": null,
+            "joinDate": "2022-11-12 08:00:38",
+            "username": "rupal.dabade@gmail.com",
+            "accountNonExpired": true,
+            "credentialsNonExpired": true,
+            "accountNonLocked": true,
+            "authorities": null
+        }
+    }
+]
+
+//get likes 
+http://localhost:8080/postHome/posts/1/likes?page=1&size=5
+http://localhost:8080/postHome/posts/{postId}/likes?page=1&size=5
+type - get
+response :- [
+    {
+        "id": 1,
+        "email": "rupal.dabade@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:00:38",
+        "username": "rupal.dabade@gmail.com",
+        "accountNonExpired": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    },
+    {
+        "id": 2,
+        "email": "rupal.dabade15@gmail.com",
+        "firstName": "rupal",
+        "lastName": "dabade",
+        "intro": null,
+        "gender": null,
+        "hometown": null,
+        "currentCity": null,
+        "profilePhoto": null,
+        "role": "user",
+        "followerCount": 0,
+        "followingCount": 0,
+        "enabled": true,
+        "accountVerified": false,
+        "emailVerified": false,
+        "birthDate": null,
+        "joinDate": "2022-11-12 08:07:35",
+        "username": "rupal.dabade15@gmail.com",
+        "accountNonExpired": true,
+        "credentialsNonExpired": true,
+        "accountNonLocked": true,
+        "authorities": null
+    }
+]
+
+
+//delete comment on post 
+http://localhost:8080/postHome/posts/1/comments/1/delete
+http://localhost:8080/postHome/posts/{postid}/comments/{commentid}/delete
+type post
+respose :- 200 success
+
+
+//delete post
+http://localhost:8080/postHome/posts/1/delete
+http://localhost:8080/postHome/posts/{postid}/delete
+type post
+respose :- 200 success

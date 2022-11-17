@@ -1,0 +1,179 @@
+<div class="home-container">
+    <div class="home__header">
+      <div class="home__header__left">
+        <img mat-card-avatar src="assets/fb-head.jpg" (click)="backToHomePage()"/>
+        <div class="input">
+          <mat-icon class="search-icon">search_outline</mat-icon>
+          <form>
+            <div>
+            <input
+              type="text"
+              name="searchUser"
+              [(ngModel)]="searchUser"
+              (ngModelChange)="getFilteredList()"
+             
+              (keyup)="onKeyPress($event)"
+              [ngClass]="{ error: showError }"
+              />
+              <ul class="search-class" *ngIf="!listHidden">
+                <li  *ngFor="let item of filteredList; let i = index"
+                [ngClass]="{ selected: i === selectedIndex }" (click)="viewUserProfile(i)"
+                > {{ item.user.firstName }} {{item.user.lastName}}</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+      <div class="home__header__middle">
+        <div class="active">
+          <mat-icon class="icon-class">home </mat-icon> &nbsp; &nbsp;
+        </div>
+      </div>
+      <div class="home__header__right" style="cursor: pointer;">
+        <!-- profile should come here -->
+        <div>
+          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
+          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+        <div>
+          <mat-icon>add</mat-icon>
+        </div>
+        <!-- logout button -->
+        <div>
+          <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item (click)="userProfile()" style="cursor: pointer;">
+              <mat-icon>account_circle</mat-icon> Edit Profile
+            </button>
+            <button mat-menu-item (click)="changePassword()" style="cursor: pointer;">
+              <mat-icon>vpn_key</mat-icon> Change Password
+            </button>
+            <button mat-menu-item (click)="logout()" style="cursor: pointer;">
+              <mat-icon>exit_to_app</mat-icon> Logout
+            </button>
+          </mat-menu>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="home__body">
+      <div class="inside">
+        <div class="user-avatar" (click)="userProfile()" style="cursor: pointer;">
+          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
+          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+        <div style="cursor: pointer;">
+          <mat-icon>people</mat-icon>
+          <span>Friends</span>
+        </div>
+        <div (click)="userProfile()" style="cursor: pointer;">
+          <mat-icon>account_circle</mat-icon>
+          <span>Edit Profile</span>
+        </div>
+        <div (click)="changePassword()" style="cursor: pointer;">
+          <mat-icon>vpn_key</mat-icon>
+          <span>Change Password</span>
+        </div>
+      </div>
+      <!-- profile show details  -->
+    <div>
+      <mat-card class="posts" style="margin-bottom: 25px;">
+        <mat-card-header class="posts__header">
+          <div class="posts__header__right">
+            <div *ngIf="user?.profilePhoto" class="col-lg-12">
+             <div class="col-4"> <img src="{{user?.profilePhoto}}" alt=""> </div>
+              <div class="col-8">
+                <h3>{{user?.firstName}} {{user?.lastName}}</h3>
+              </div> 
+            </div>
+
+            <div *ngIf="!user?.profilePhoto" class="col-lg=12">
+           <div class="col-4">
+            <img
+            src="../../assets/female-avatar.png" style="height:80px; width:70px; border-radius: 5px;"
+            mat-card-avatar/> 
+          </div> 
+            <div>
+              <h2> {{user?.firstName}} {{user?.lastName}}</h2>
+            </div> 
+            </div>
+          </div>
+        </mat-card-header>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="showEditProfile(user)"> 
+            <mat-icon>edit</mat-icon> &nbsp; Edit Profile</button>
+        </mat-card-actions>
+    </mat-card>
+      <div class="posts-section" style="width:850px;">
+        <mat-card *ngFor="let p of posts; let i = index" class="posts">
+          <mat-card-header class="posts__header" (click)="viewUserProfile(p)">
+            <img alt="{{ p.user_name }}" mat-card-avatar [src]="p.avatar">
+            <div class="posts__header__right">
+              <h3>{{ p.user_name }}</h3>
+              <span>{{ p.time.seconds * 1000 | date:'shortTime' }}</span>
+            </div>
+          </mat-card-header>
+          <mat-card-content class="posts__body" style="display: flex;
+              flex-direction: column;
+              justify-content: center;">
+            <p>{{ p.content }}</p>
+            <img [src]="p.media.url" style="object-fit: contain;" *ngIf="p.media.type ==='image' && p.media.url"
+              height="200"> <br />
+            <video [src]="p.media.url" style="object-fit: contain;" *ngIf="p.media.type==='video' && url" height="200"
+              controls></video> <br />
+  
+            <div style="border-bottom: 1px solid;
+                margin-bottom: 9px;">
+            </div>
+            <!-- like for a comment -->
+            <div class="post-bottom">
+              <div class="inner-sec"> {{p.likes.length}}
+                <mat-icon  [ngClass]="{'primary': p.is_liked ,'red': !p.is_liked }">thumb_up</mat-icon>
+                <span>Like</span>
+              </div>
+  
+              <div class="inner-sec" (click)="p.is_show_comments=!p.is_show_comments"> {{p.comments.length}}
+                <mat-icon color="primary">comment</mat-icon>
+                <span>Comments</span>
+              </div>
+  
+            </div>
+          </mat-card-content>
+  
+          <mat-card-content class="posts_body" style="border-top: 1px solid;
+          padding: 17px 0;" *ngIf="p.is_show_comments">
+            <div style="display: flex; gap: 13px; align-items: center; padding: 3px 19px;">
+              <img alt="img" mat-card-avatar src="../../assets/avatar.png">
+              <input style="    width: 100%;
+              padding: 7px 5px;
+              border-radius: 14px;" placeholder="add comments" [(ngModel)]="p.comment"/>
+              <!-- <span><button mat-button color="info">Add Comment</button></span> -->
+            </div>
+            <mat-card  *ngFor="let c of (more ? p.comments : (p.comments|slice:0:2))">
+                  <div class="posts__header">
+                    <div style="display: flex;gap:14px">
+                      <img alt="img" mat-card-avatar src="../../assets/avatar.png">
+                      <div>
+                        <h4 style="margin: auto;">{{ c.title }}</h4>
+                        <span>{{ c.time.seconds * 1000 | date:'shortTime' }}</span>
+                      </div>
+                    </div>
+                    <p style="padding-top: 5px;">{{ c.comment }}</p> 
+                  </div> 
+            </mat-card>
+            <button mat-button color="info" (click)="more = !more">{{ more ? 'viewless' : 'viewAll' }}</button>
+          </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="!posts.length" style="align-items: center;">
+          <p>No Posts Found</p>
+        </mat-card>
+      </div>
+    </div>
+      
+      
+    </div>
+  </div>

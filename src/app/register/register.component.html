@@ -1,0 +1,30 @@
+<section class="register">
+  <div class="header">
+    <h3>Sign Up</h3>
+    <p>It's quick and easy</p>
+  </div>
+
+  <div class="body">
+    <form class="login-form " [formGroup]="registerForm" (ngSubmit)="submit()">
+      <div class="user_name">
+        <input type="text" placeholder="FirstName" formControlName="firstName" name="firstName">
+        <input type="text" placeholder="LastName" name="lastName" formControlName="lastName">
+
+      </div>
+
+      <div class="email_password">
+        <input type="text" placeholder="Email" name="email" formControlName="email">
+        <input type="password" placeholder="Password" name="password" formControlName="password">
+      </div>
+      <div class="gender_field">
+        <label for="gender"><b>Gender</b></label>
+        <select placeholder="Select Gender" name="gender" formControlName="gender">
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+      <button type="submit" class="submit-button" >Sign
+        Up</button>
+    </form>
+  </div>
+</section>

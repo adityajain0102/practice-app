@@ -1,0 +1,36 @@
+<div class="login-container">
+  <header class="login__header">
+    <div class="login__header__left">
+      <img alt="logo" src="assets/fb-logo-1.jpg">
+    </div>
+    <div class="login__header__right">
+      <mat-card class="login__header__right__card">
+        <mat-card-content class="login__header__right__card__content">
+          <form class="login-form " [formGroup]="loginForm" (ngSubmit)="login()">
+
+            <input name="email" formControlName="email" placeholder="Email address or phone number" required
+              type="text">
+              <div *ngIf="formSubmitted && formFields['email'].hasError('required')" class="error-info">
+                email is required
+            </div>
+            <div *ngIf="formSubmitted && formFields['email'].hasError('pattern')" class="error-info">
+              Invalid email
+          </div>
+            <input name="password"  placeholder="Password" formControlName="password" required type="password">
+            <div *ngIf="formSubmitted && formFields['password'].hasError('required')" class="error-info">
+              password is required
+          </div>
+            <button  class="login-button" 
+              type="submit">Log In
+            </button>
+          </form>
+
+          <a [routerLink]="['/forgotpassword']">Forgot Password?</a>
+          <hr>
+          <button class="create-account" (click)="openRegister()">Create New Account</button>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+  </header>
+</div>

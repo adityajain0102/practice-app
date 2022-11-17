@@ -1,0 +1,104 @@
+<div class="home-container">
+    <div class="home__header">
+      <div class="home__header__left">
+        <img mat-card-avatar src="assets/fb-head.jpg" (click)="backToHomePage()"/>
+        <div class="input">
+          <mat-icon class="search-icon">search_outline</mat-icon>
+          <form>
+            <div>
+            <input
+              type="text"
+              name="searchUser"
+              [(ngModel)]="searchUser"
+              (ngModelChange)="getFilteredList()"
+             
+              (keyup)="onKeyPress($event)"
+              [ngClass]="{ error: showError }"
+              />
+              <ul class="search-class" *ngIf="!listHidden">
+                <li  *ngFor="let item of filteredList; let i = index"
+                [ngClass]="{ selected: i === selectedIndex }" (click)="viewUserProfile(i)"
+                > {{ item.user?.firstName }} {{item.user?.lastName}}</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+      <div class="home__header__middle">
+        <div class="active">
+          <mat-icon class="icon-class">home </mat-icon> &nbsp; &nbsp;
+        </div>
+      </div>
+      <div class="home__header__right" style="cursor: pointer;">
+        <!-- profile should come here -->
+        <div>
+          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
+          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
+          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+        </div>
+        <div>
+          <mat-icon>add</mat-icon>
+        </div>
+        <!-- logout button -->
+        <div>
+          <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item (click)="userProfile()" style="cursor: pointer;">
+              <mat-icon>account_circle</mat-icon> Edit Profile
+            </button>
+            <button mat-menu-item (click)="changePassword()" style="cursor: pointer;">
+              <mat-icon>vpn_key</mat-icon> Change Password
+            </button>
+            <button mat-menu-item (click)="logout()" style="cursor: pointer;">
+              <mat-icon>exit_to_app</mat-icon> Logout
+            </button>
+          </mat-menu>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="home__body">
+        <div class="inside">
+          </div>
+          <div *ngIf="searchFriend">
+            <mat-card class="posts" style="margin-bottom: 25px; width:600px;">
+              <mat-card-header class="posts__header">
+                <div class="posts__header__right">
+                  <div *ngIf="searchFriend?.profilePhoto" class="col-lg-12">
+                   <div class="col-4"> <img src="{{searchFriend?.profilePhoto}}" alt=""> </div>
+                    <div class="col-8">
+                      <h3>{{searchFriend?.firstName}} {{searchFriend?.lastName}}</h3>
+                    </div> 
+                  </div>
+                  <div *ngIf="!searchFriend?.profilePhoto" class="col-lg=12">
+                 <div class="col-4">
+                  <img
+                  src="../../assets/female-avatar.png" style="height:80px; width:70px; border-radius: 5px;"
+                  mat-card-avatar/> 
+                </div> 
+                  <div>
+                    <h2> {{searchFriend?.firstName}} {{searchFriend?.lastName}}</h2>
+                  </div> 
+                  </div>
+                </div>
+              </mat-card-header>
+              <mat-card-actions>
+                <button style="padding-left:20px;" *ngIf="!isfollowing || searchFriend?.followedByAuthUser == 'false'" mat-raised-button color="primary" (click)="followUser(searchFriend, 'follow')"> 
+                   Add Friend </button>
+                  <button style="padding-left:20px;" *ngIf="isfollowing || searchFriend?.followedByAuthUser == 'true'" mat-raised-button color="warn" (click)="followUser(searchFriend, 'unfollow')"> 
+                     Un Friend </button>
+              </mat-card-actions>
+          </mat-card>
+        </div>
+        <div *ngIf="!searchFriend">
+            <mat-card class="posts" style="margin-bottom: 25px; width:600px;">
+                <mat-card-header>
+                    USER NOT FOUND
+                </mat-card-header>
+            </mat-card>
+        </div>
+      </div>
+</div>
+      
