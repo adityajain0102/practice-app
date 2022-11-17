@@ -307,6 +307,63 @@ export class HomeComponent implements OnInit {
           error: (error)=> {
             console.log("error search api", error);
              // testing code here before api integration. ()
+             this.searchUsers=[
+              {
+                  "user": {
+                      "id": 1,
+                      "email": "user.one@gmail.com",
+                      "firstName": "user",
+                      "lastName": "one",
+                      "intro": null,
+                      "gender": "male",
+                      "hometown": null,
+                      "currentCity": null,
+                      "profilePhoto": null,
+                      "role": "user",
+                      "followerCount": 0,
+                      "followingCount": 1,
+                      "enabled": true,
+                      "accountVerified": false,
+                      "emailVerified": false,
+                      "birthDate": null,
+                      "joinDate": "2022-11-12 08:00:38",
+                      "credentialsNonExpired": true,
+                      "accountNonExpired": true,
+                      "username": "rupal.dabade@gmail.com",
+                      "authorities": null,
+                      "accountNonLocked": true
+                  },
+                  "followedByAuthUser": false
+              },
+              {
+                  "user": {
+                      "id": 1,
+                      "email": "rupal.dabade@gmail.com",
+                      "firstName": "rupal",
+                      "lastName": "dabade",
+                      "intro": null,
+                      "gender": "female",
+                      "hometown": null,
+                      "currentCity": null,
+                      "profilePhoto": null,
+                      "role": "user",
+                      "followerCount": 0,
+                      "followingCount": 1,
+                      "enabled": true,
+                      "accountVerified": false,
+                      "emailVerified": false,
+                      "birthDate": null,
+                      "joinDate": "2022-11-12 08:00:38",
+                      "credentialsNonExpired": true,
+                      "accountNonExpired": true,
+                      "username": "rupal.dabade@gmail.com",
+                      "authorities": null,
+                      "accountNonLocked": true
+                  },
+                  "followedByAuthUser": true
+              }
+          ]
+          
             this.filteredList = this.searchUsers.filter((user:any) => user.user.firstName.toLowerCase().startsWith(this.searchUser.toLowerCase()) || user.user.lastName.toLowerCase().startsWith(this.searchUser.toLowerCase()));
             console.log("fil..", this.filteredList);
           }

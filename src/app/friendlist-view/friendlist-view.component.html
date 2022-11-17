@@ -11,14 +11,16 @@
               name="searchUser"
               [(ngModel)]="searchUser"
               (ngModelChange)="getFilteredList()"
-             
               (keyup)="onKeyPress($event)"
               [ngClass]="{ error: showError }"
               />
               <ul class="search-class" *ngIf="!listHidden">
                 <li  *ngFor="let item of filteredList; let i = index"
                 [ngClass]="{ selected: i === selectedIndex }" (click)="viewUserProfile(i)"
-                > {{ item.user?.firstName }} {{item.user?.lastName}}</li>
+                ><img alt="" *ngIf="item.user.profilePhoto === null && item.user?.gender =='male'" style="height:20px" mat-card-avatar src="../../assets/avatar.png">
+                <img alt="" *ngIf="(item.user.profilePhoto === null &&  item.user?.gender =='female' ) || item.user?.gender == null" style="height:20px" mat-card-avatar src="../../assets/female-avatar.png"> 
+                <img alt="" *ngIf="item.user.profilePhoto !== null" style="height:20px" mat-card-avatar src="{{item?.user?.profilePhoto}}">
+                {{ item.user.firstName }} {{item.user.lastName}}</li>
               </ul>
             </div>
           </form>
@@ -31,12 +33,13 @@
         </div>
       </div>
       <div class="home__header__right" style="cursor: pointer;">
-        <!-- profile should come here -->
-        <div>
-          <img alt="" *ngIf="user?.gender =='male'" mat-card-avatar src="../../assets/avatar.png">
-          <img alt="" *ngIf="user?.gender =='female'" mat-card-avatar src="../../assets/female-avatar.png">
-          <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
-        </div>
+       <!-- profile should come here -->
+       <div>
+        <img alt=""  *ngIf="(user?.profilePhoto === null && user?.gender =='female')" mat-card-avatar style="height:25px;" src="../../assets/female-avatar.png">
+        <img alt="" *ngIf="(user?.profilePhoto === null && user?.gender =='male')" mat-card-avatar src="../../assets/avatar.png">
+        <img alt="" *ngIf="user?.profilePhoto !== null" mat-card-avatar src="{{user?.profilePhoto}}">
+        <span class="name">{{ user?.firstName }} {{ user?.lastName }}</span>
+      </div>
         <div>
           <mat-icon>add</mat-icon>
         </div>
